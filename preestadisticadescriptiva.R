@@ -1,17 +1,24 @@
+#Práctica 1: Completa los siguientes ejercicios confeccionando un documento
+#en el cual se detallen las operaciones llevadas a caba durante el desarrollo
+#de la siguiente actividad.
+
 #Ejercicio 1 vector_x_vector_y
 vector_x <- c(1,2,3,4,5)
 vector_y <- c(9.1,2.4,7.5,1.3,3.4)
 
-#Un vector (v) es una matriz unidimensional que queda definida entre dos elementos.
-#Es una estructura de datos unidimensional que almacena tipos de datos numéricos o lógicos.
+#Un vector (v) es una matriz unidimensional que queda definida entre paréntesis, datos del mismo tipo.
+#Es una estructura de datos unidimensional que almacena tipos de datos: numéricos, cadena de caracteres
+#y/o lógicos. Por ello, es la estructura de datos más sencilla en R.
 #Por ejemplo, "1 fila x nº columnas" es un vector de fila o "1 columna x nº filas"
-#es un vector de columna. La lista es una enumeración de datos que tiene más de una dimensión.
-#La longitud entre estos dos vectores es cinco, debido a que tiene cinco valores en una 
-#única dimensión. 
+#es un vector de columna. 
+#La lista es una enumeración de datos que tiene más de una dimensión, pues permite almacenar
+#datos de distinto tipo simultáneamente, mientras que el vector solo puede almacenar de un tipo a la vez.
+#Tanto la longitud de x como de y es 5, pues tiene cinco valores en una dimensión.
 #'integer' es una función en la que solo se pueden almacenar números enteros, sin decimales. Por ejemplo, el 1.
-#'double' es una función en la que se pueden almacenar numéros dobles, es decir, con decimales. Por ejemplo, el 3,5.
+#'double' es una función en la que se pueden almacenar numéros reales, es decir, con decimales. Por ejemplo, el 3,5.
 #Los vectores que almacenan datos enteros pueden procesarse más rápidamente que los vectores que
-#almacenan datos con decimales.
+#almacenan datos con decimales, además de que ocupa menos memoria. Sin embargo, los datos double suelen
+#ser más precisos.
 
 
 #Ejercicio 2 operaciones_x_y
@@ -67,8 +74,9 @@ print(minimo_y)
 
 
 #Ejercicio 8 valor_absoluto_primer_valor_numerico_y
-absoluto_y <- abs(vector_y)
+absoluto_y <- abs(vector_y[1])
 print(absoluto_y)
+
 
 #Ejercicio 9 raiz_cuadrada_valores_numericos_y
 # Raíz cuadrada
@@ -87,13 +95,14 @@ list <- c(vector_x,vector_y)
 print(list)
 length(list)
 class(list)
-#La longitud de este valor es 10
+#La longitud de este objeto llamado "lista" es 10
 #double
-#Esto se debe a que la lista es un objeto en total, y como los numéros del vector y tienen decimales, entonces se utiliza double.
+#Esto se debe a que, cuando se crea un vector numérico con números decimales, se le asigna de facto a este tipo de datos. 
 
 
 #Ejercicio 12 valores_NA_objeto_list
-anyNA(list)
+is.na(list)
+#Da FALSE porque o existen valores NA en este objeto
 
 
 #Ejercicio 13 vector_de_nombre_z
@@ -101,11 +110,11 @@ vector_z <- c(29,NA,12,46,73)
 
 
 #Ejercicio 14 media_de_z
-media_z <- c(vector_z)
-mean(media_z)
-#NA, porque uno de sus valores es NA, y por tanto, no se puede calcular la media
-#Solución:
-media_z <- c(29,0,12,46,73)
+media_z <- mean(vector_z)
+print(media_z)
+#NA, porque uno de sus valores es NA, y por tanto, no se puede calcular la media. NO hay un valor asignado.
+#Posible solución:
+media_z <- mean(vector_z, na.rm = TRUE)
 mean(media_z)
 
 
@@ -141,14 +150,13 @@ print(suma_matriz)
 resta_matriz <- matriz_a-matriz_b
 print(resta_matriz)
 #-9
-#Porque resta los valores de la matriz, posición por posición, y por ello, da ese resultado.
+#Porque resta los valores de la matriz, posición por posición, elemento a elemento, y por ello, da ese resultado.
 
 
 #Ejercicio 19
-matriz
+#matriz
 matriz_t <- t(matriz)
-#gives transpose of matrix x
-matriz_t
+print(matriz_t)
 
 
 #Ejercicio 20 multiplica_matriz_por_consonante
@@ -169,9 +177,130 @@ print(matriz_mult[2,])
 print(matriz_mult[,2])
 
 
+#Práctica 2. Práctica de Estadística Descriptiva en R.
+
+#Ejercicio 1 Generar datos aleatorios de cuentas en un yacimiento
+set.seed(123) 
+num_cuentas <- round(rnorm(100, mean = 50, sd = 10))
+print(num_cuentas)
+#Se Fija la semilla para la reproductibilidad de los valores
 
 
+#Ejercicio 2 calcula la media
+mean(num_cuentas)
 
+
+#Ejercicio 3 calcula la mediana
+median(num_cuentas)
+
+
+#Ejercicio 4 calcula la moda
+moda <- as.numeric(names(sort(table(num_cuentas), decreasing = TRUE)
+                         [1]))
+print(paste("La moda de las cuentas en el yacimiento:", moda))
+
+
+#Ejercicio 5 calcula el rango
+rango <- max(num_cuentas) - min(num_cuentas)
+print(rango)
+
+
+#Ejercicio 6 calcula el primer cuartil
+primer_cuartil <- quantile(num_cuentas, probs = 0.25)
+print(primer_cuartil)
+
+
+#Ejercicio 7 calcula el percentil 75
+percentil_75 <- quantile(num_cuentas, probs = 0.75)
+print(percentil_75)
+
+
+#Ejercicio 8 varianza. Se puede escribir de dos formas, aunque la ecuación es la misma:
+#Forma 1:
+var(num_cuentas)
+#Forma 2: 
+varianza <- var(num_cuentas)
+print(varianza)
+
+
+#Ejercicio 9 desviacion_estandar. Se puede escribir de dos formas, aunque la ecuación es la misma:
+#Forma 1: 
+sd(num_cuentas)
+#Forma 2:
+desviacion_estandar <- sd(num_cuentas)
+print(desviacion_estandar)
+#Incluso se puede hacer de otra forma, que no es la misma ecuación pero da lo mismo:
+sqrt(var(num_cuentas))
+
+
+#Ejercicio 10 historiograma_de_frecuencia
+library(ggplot2)
+hist(num_cuentas,
+     main = "Historiograma de frecuencia",
+     xlab = "Numero de cuentas",
+     ylab = "Frecuencia",
+     col = "pink",
+     border = "black",
+     breaks = 10)
+
+
+#Ejercicio 11 diagrama_de_caja_de_cuentas
+boxplot(num_cuentas,
+        main = "Diagrama de caja",
+        ylab = "Numero de cuentas",
+        col = "lightblue",
+        border = "red")
+
+
+#Ejercicio 12 grafico_de_densidad
+densidad <- density(num_cuentas)
+plot(densidad,
+     main = "Grafico de densidad de cuentas",
+     xlab = "Numero de cuentas",
+     ylab = "Densidad")
+
+
+#Ejercicio 13 grafico_de_barras
+barplot(num_cuentas,
+        main = "Grafico de barras",
+        xlab = "Intervalos",
+        ylab = "Frecuencia",
+        col = "lightblue",
+        border = "purple")
+
+
+#Ejercicio 14 generar_muestras_longitud_10_para_5_variables.
+#Para poder visualizarlo mejor, se plantea la elaboración de un data frame.
+tipo_artefacto <- sample(c("Hachas", "Idolos", "Cuentas", "Fibulas", "Cuencos"), 10, replace = TRUE)
+material <- sample(c("Litico", "Metal", "Vidrio", "Ceramica"), 10, replace = TRUE)
+periodo_cultural <- sample(c("Paleolitico", "Neolitico", "Calcolitico","Edad_Bronce","Edad_Hierro"), 10, replace = TRUE)
+estado_conservacion <- sample(c("Excelente","Bueno", "Regular", "Malo"), 10, replace = TRUE)
+ubicacion <- sample(c("Antequera", "Valencina_de_la_Concepcion", "Granada","Cumbres_Mayores"), 10, replace = TRUE)
+
+datos_ejercicio_14 <- data.frame(
+  tipo_artefacto = tipo_artefacto,
+  material = material, 
+  periodo_cultural = periodo_cultural,
+  estado_conservacion = estado_conservacion,
+  ubicacion = ubicacion
+)
+print(datos_ejercicio_14)
+View(datos_ejercicio_14)
+
+tabla_tipo_artefacto <- table(tipo_artefacto)
+View(tabla_tipo_artefacto)
+
+tabla_material <- table(material)
+View(tabla_material)
+
+tabla_periodo_cultural <- table(periodo_cultural)
+View(tabla_periodo_cultural)
+
+tabla_estado_conservacion <- table(estado_conservacion)
+View(tabla_estado_conservacion)
+
+tabla_ubicacion <- table(ubicacion)
+View(tabla_ubicacion)
 
 
 
